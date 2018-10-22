@@ -4,13 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --ext .js --ext .jsx src",
+    "build-deploy": "node ./deploy/index.js -d"
   },
   "author": "Matej Filkovic",
   "license": "MIT",
   "devDependencies": {
+    "archiver": "^3.0.0",
+    "aws-sdk": "^2.339.0",
+    "commander": "^2.19.0",
+    "dotenv": "^6.1.0",
     "eslint": "^5.7.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
-  }
+    "eslint-plugin-import": "^2.14.0",
+    "mime": "^2.3.1"
+  },
+  "dependencies": {}
 }

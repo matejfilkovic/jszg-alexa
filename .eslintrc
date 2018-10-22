@@ -23,7 +23,8 @@
         "groups": [
           ["+", "-", "*", "/", "%", "**", "==", "!=", "===", "!==", ">", ">=", "<", "<="]
         ]
-      }]
+      }],
+      "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
     },
     "globals": {
       "document": true,
