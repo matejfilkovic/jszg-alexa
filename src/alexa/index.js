@@ -4,22 +4,17 @@ const HelpIntentHandler = require('./handlers/help')
 const LaunchRequestIntent = require('./handlers/launch')
 const StopIntentHandler = require('./handlers/stop')
 const ErrorHandler = require('./handlers/error')
+const GetOrdersIntentHandler = require('./handlers/get-orders')
 
-let skill
-
-exports.handler = async (event, context) => {
-  if (!skill) {
-    skill = Alexa.SkillBuilders.custom()
-      .addRequestHandlers(
-        HelpIntentHandler,
-        LaunchRequestIntent,
-        StopIntentHandler
-      )
-      .addErrorHandlers(ErrorHandler)
-      .create()
-  }
-
-  const response = await skill.invoke(event, context)
-
-  return response
-}
+exports.handler = (
+  Alexa.SkillBuilders.custom()
+    .addRequestHandlers(
+      GetOrdersIntentHandler,
+      HelpIntentHandler,
+      LaunchRequestIntent,
+      HelpIntentHandler,
+      StopIntentHandler,
+    )
+    .addErrorHandlers(ErrorHandler)
+    .lambda()
+)
