@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js --ext .jsx src",
-    "build-deploy": "node ./deploy/index.js -d"
+    "deploy": "node ./deploy/index.js -d"
   },
   "author": "Matej Filkovic",
   "license": "MIT",
@@ -19,5 +19,7 @@
     "eslint-plugin-import": "^2.14.0",
     "mime": "^2.3.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ask-sdk": "^2.1.0"
+  }
 }
