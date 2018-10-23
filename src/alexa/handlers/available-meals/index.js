@@ -1,5 +1,8 @@
 const { fetchAvailableMeals } = require('../../../lunch-api')
-
+const {
+  getSlotValue,
+  getDateSpeechText
+} = require('../utils')
 const { WHAT_ELSE_HELP_MESSAGE } = require('../constants')
 
 const GetAvailableMealsIntentHandler = {
@@ -8,7 +11,15 @@ const GetAvailableMealsIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'GetAvailableMealsIntent'
   },
   async handle(handlerInput) {
-    const mealsSpeechText = await getAvailableMealsSpeechText()
+    const { request } = handlerInput.requestEnvelope
+    if (request.dialogState !== 'COMPLETED') {
+      return handlerInput.responseBuilder
+        .addDelegateDirective()
+        .getResponse()
+    }
+
+    const date = getSlotValue(request, 'Date')
+    const mealsSpeechText = await getAvailableMealsSpeechText(date)
 
     const speechText = `${mealsSpeechText} ${WHAT_ELSE_HELP_MESSAGE}`
 
@@ -19,14 +30,16 @@ const GetAvailableMealsIntentHandler = {
   }
 }
 
-async function getAvailableMealsSpeechText() {
+async function getAvailableMealsSpeechText(date) {
   const meals = await fetchAvailableMeals()
 
   const mealsSpeechText = meals.map(meal => (
     meal.name
   )).join(', ')
 
-  return `Here are the meals you can order: ${mealsSpeechText}.`
+  const dateSpeechText = getDateSpeechText(date)
+
+  return `Here are the meals you can order ${dateSpeechText}: ${mealsSpeechText}.`
 }
 
 module.exports = GetAvailableMealsIntentHandler

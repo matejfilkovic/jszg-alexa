@@ -17,3 +17,7 @@ module.exports.getDateSpeechText = (date) => {
 
   return `${dateMoment.format('MMMM Do')}`
 }
+
+module.exports.getSlotValue = (request, slotName) => {
+  return request.intent.slots[slotName].value
+}
