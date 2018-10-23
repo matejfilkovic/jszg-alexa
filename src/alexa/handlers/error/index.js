@@ -7,8 +7,10 @@ const ErrorHandler = {
   handle(handlerInput, error) {
     console.log(`Error handled: ${error.message}`)
 
+    const speechText = `Sorry, we got in a trouble. ${DEFAULT_REPOROMPT_MESSAGE}`
+
     return handlerInput.responseBuilder
-      .speak(DEFAULT_REPOROMPT_MESSAGE)
+      .speak(speechText)
       .reprompt(DEFAULT_REPOROMPT_MESSAGE)
       .getResponse()
   },
