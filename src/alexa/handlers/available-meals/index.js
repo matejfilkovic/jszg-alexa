@@ -12,13 +12,27 @@ const GetAvailableMealsIntentHandler = {
   },
   async handle(handlerInput) {
     const { request } = handlerInput.requestEnvelope
+    const date = getSlotValue(request, 'Date')
+
+    // An example with ElicitSlot directive.
+    if (request.dialogState !== 'COMPLETED') {
+      if (!date) {
+        return handlerInput.responseBuilder
+          .addElicitSlotDirective('Date')
+          .speak('When')
+          .reprompt('When')
+          .getResponse()
+      }
+    }
+
+    /* An original example with Delegate directive.
     if (request.dialogState !== 'COMPLETED') {
       return handlerInput.responseBuilder
         .addDelegateDirective()
         .getResponse()
     }
+    */
 
-    const date = getSlotValue(request, 'Date')
     const mealsSpeechText = await getAvailableMealsSpeechText(date)
 
     const speechText = `${mealsSpeechText} ${WHAT_ELSE_HELP_MESSAGE}`
