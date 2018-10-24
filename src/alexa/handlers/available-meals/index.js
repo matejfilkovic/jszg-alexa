@@ -1,9 +1,13 @@
 const { fetchAvailableMeals } = require('../../../lunch-api')
 const {
   getSlotValue,
-  getDateSpeechText
+  getDateSpeechText,
+  supportsDisplay
 } = require('../utils')
+
 const { WHAT_ELSE_HELP_MESSAGE } = require('../constants')
+
+const { buildTemplate } = require('./display')
 
 const GetAvailableMealsIntentHandler = {
   canHandle(handlerInput) {
@@ -33,20 +37,26 @@ const GetAvailableMealsIntentHandler = {
     }
     */
 
-    const mealsSpeechText = await getAvailableMealsSpeechText(date)
+    const meals = await fetchAvailableMeals()
 
+    if (supportsDisplay(handlerInput)) {
+      const template = buildTemplate(meals)
+
+      handlerInput.responseBuilder
+        .addRenderTemplateDirective(template)
+    }
+
+    const mealsSpeechText = await getAvailableMealsSpeechText(date, meals)
     const speechText = `${mealsSpeechText} ${WHAT_ELSE_HELP_MESSAGE}`
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .reprompt(speechText)
+      .reprompt(WHAT_ELSE_HELP_MESSAGE)
       .getResponse()
   }
 }
 
-async function getAvailableMealsSpeechText(date) {
-  const meals = await fetchAvailableMeals()
-
+async function getAvailableMealsSpeechText(date, meals) {
   const mealsSpeechText = meals.map(meal => (
     meal.name
   )).join(', ')

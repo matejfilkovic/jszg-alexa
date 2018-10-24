@@ -21,3 +21,15 @@ module.exports.getDateSpeechText = (date) => {
 module.exports.getSlotValue = (request, slotName) => {
   return request.intent.slots[slotName].value
 }
+
+module.exports.supportsDisplay = (handlerInput) => {
+  const displaySupported = (
+    handlerInput.requestEnvelope.context
+    && handlerInput.requestEnvelope.context.System
+    && handlerInput.requestEnvelope.context.System.device
+    && handlerInput.requestEnvelope.context.System.device.supportedInterfaces
+    && handlerInput.requestEnvelope.context.System.device.supportedInterfaces.Display
+  )
+
+  return displaySupported
+}
