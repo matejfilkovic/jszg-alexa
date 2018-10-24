@@ -6,6 +6,7 @@ const StopIntentHandler = require('./handlers/stop')
 const ErrorHandler = require('./handlers/error')
 const GetOrdersIntentHandler = require('./handlers/get-orders')
 const GetAvailableMealsIntentHandler = require('./handlers/available-meals')
+const ElementSelectedIntentHandler = require('./handlers/element-selected')
 
 exports.handler = (
   Alexa.SkillBuilders.custom()
@@ -16,6 +17,7 @@ exports.handler = (
       LaunchRequestIntent,
       HelpIntentHandler,
       StopIntentHandler,
+      ElementSelectedIntentHandler
     )
     .addErrorHandlers(ErrorHandler)
     .lambda()
