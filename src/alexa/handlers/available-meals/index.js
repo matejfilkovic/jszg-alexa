@@ -52,6 +52,7 @@ const GetAvailableMealsIntentHandler = {
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(WHAT_ELSE_HELP_MESSAGE)
+      .addHintDirective('Select the first one')
       .getResponse()
   }
 }
